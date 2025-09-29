@@ -1,0 +1,30 @@
+{
+  "name": "@rbac_tasks/electron",
+  "version": "0.1.0",
+  "description": "Task Management Desktop Application",
+  "author": "rbac_tasks Team",
+  "private": true,
+  "main": "src/main.js",
+  "type": "commonjs",
+  "scripts": {
+    "dev": "wait-on tcp:5173 && electron .",
+    "prebuild": "npm run copy-backend",
+    "prebuild:mac": "npm run copy-backend:mac",
+    "build": "electron-builder --config ../../electron-builder.yml",
+    "build:mac": "electron-builder --config ../../electron-builder.yml",
+    "copy-backend": "xcopy /E /I /Y \"..\\..\\packages\\backend\" \"backend\" && xcopy /E /I /Y \"..\\..\\packages\\shared\" \"shared\"",
+    "copy-backend:mac": "rm -rf backend shared && cp -R ../../packages/backend . && cp -R ../../packages/shared ."
+  },
+  "dependencies": {
+    "@rbac_tasks/backend": "file:../../packages/backend",
+    "@rbac_tasks/shared": "file:../../packages/shared",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "sqlite3": "^5.1.6"
+  },
+  "devDependencies": {
+    "electron": "^28.3.0",
+    "electron-builder": "^24.13.3",
+    "7zip-bin": "^5.2.0"
+  }
+}

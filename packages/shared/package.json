@@ -1,0 +1,7 @@
+{
+  "name": "@rbac_tasks/shared",
+  "version": "0.1.0",
+  "main": "index.js",
+  "type": "commonjs"
+}
+

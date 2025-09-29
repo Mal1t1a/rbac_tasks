@@ -1,0 +1,34 @@
+{
+  "name": "rbac_tasks",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=18.16"
+  },
+  "scripts": {
+    "dev": "concurrently -k --names \"renderer,electron\" --prefix-colors \"cyan,magenta\" \"npm:dev:renderer\" \"npm:dev:electron\"",
+    "dev:renderer": "npm run dev --workspace @rbac_tasks/renderer",
+    "dev:electron": "npm run dev --workspace @rbac_tasks/electron",
+    "build": "npm run build:renderer && npm run build:electron",
+    "build:mac": "npm run build:renderer && npm run build:electron:mac",
+    "build:renderer": "npm run build --workspace @rbac_tasks/renderer",
+    "build:electron": "npm run build --workspace @rbac_tasks/electron",
+    "build:electron:mac": "npm run build:mac --workspace @rbac_tasks/electron",
+    "lint": "eslint \"{apps,packages}/**/*.{js,ts,tsx}\" --max-warnings=0",
+    "test:smoke": "node packages/backend/scripts/smoke.js"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^7.15.0",
+    "@typescript-eslint/parser": "^7.15.0",
+    "concurrently": "^8.2.2",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react": "^7.34.4",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "wait-on": "^7.0.1"
+  }
+}

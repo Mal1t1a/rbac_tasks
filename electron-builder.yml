@@ -1,0 +1,55 @@
+appId: com.rbac_tasks.taskmanagement
+productName: Task Management
+electronVersion: 28.3.3
+npmRebuild: false
+directories:
+  output: ../../build
+  buildResources: resources
+  app: .
+files:
+  - '!**/node_modules/*/{CHANGELOG.md,README.md,README,readme.md}'
+  - '!**/node_modules/.bin'
+  - '!**/*.map'
+  - from: src
+    to: .
+    filter:
+      - '**/*'
+  - from: backend
+    to: backend
+    filter:
+      - '**/*'
+  - from: shared
+    to: shared
+    filter:
+      - '**/*'
+extraFiles:
+  - from: ../../packages/renderer/dist
+    to: renderer
+    filter:
+      - '**/*'
+  - from: ../../production.env
+    to: .env
+  - from: ../../.env.example
+    to: .env.example
+extraResources:
+  - from: ../../data
+    to: data
+    filter:
+      - '**/*'
+asarUnpack:
+  - backend/**
+  - node_modules/sqlite3/**
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+  artifactName: '${productName}-${version}-Setup.${ext}'
+mac:
+  target:
+    - target: dmg
+      arch:
+        - x64
+        - arm64
+  artifactName: '${productName}-${version}-${arch}.${ext}'
+  identity: null

@@ -1,0 +1,41 @@
+# Dependencies
+node_modules/
+
+# Builds
+build/
+dist/
+out/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-error.log*
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Database
+data/
+data/*.db
+data/*.sqlite
+data/*.sqlite3
+*.sqlite
+*.sqlite3
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Tooling
+.vscode/
+.idea/
+coverage/
+
+packages/renderer/node_modules/
+packages/backend/node_modules/
+packages/shared/node_modules/
+
+apps/electron/backend/
+apps/electron/shared/

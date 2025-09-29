@@ -1,0 +1,158 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Design tokens (per docs/design.md) */
+:root {
+  --color-ink:#0B0E11; --color-carbon:#14181F; --color-slate:#1F2630; --color-paper:#F7F9FC;
+  --color-fog:#A7B0BD; --color-mist:#D7DEE7; --color-accent:#3A7AFE;
+  --color-success:#12B886; --color-warning:#FFC043; --color-danger:#E03131; --color-focus:#7AA7FF;
+
+  --radius-sm:6px; --radius-md:10px; --radius-lg:14px; --radius-xl:20px;
+  --shadow-1:0 1px 2px rgba(0,0,0,0.06), 0 1px 1px rgba(0,0,0,0.04);
+  --shadow-2:0 4px 12px rgba(0,0,0,0.12);
+
+  /* Semantic theme vars */
+  --app-bg: var(--color-carbon);
+  --app-surface: var(--color-slate);
+  --app-fg-high: #F7F9FC;
+  --app-fg-mid: rgba(247,249,252,0.7);
+  --app-fg-low: rgba(247,249,252,0.4);
+  --app-border: rgba(215,222,231,0.12);
+  --app-primary: var(--color-accent);
+  --app-success: var(--color-success);
+  --app-warning: var(--color-warning);
+  --app-danger: var(--color-danger);
+  --focus-ring: var(--color-focus);
+
+  /* Adaptive surfaces */
+  --pill-bg: rgba(255,255,255,0.10);
+  --pill-bg-hover: rgba(255,255,255,0.20);
+
+  color-scheme: dark;
+}
+
+/* Light theme overrides */
+[data-theme="light"] {
+  --app-bg: var(--color-paper);
+  --app-surface: #FFFFFF;
+  --app-fg-high: var(--color-ink);
+  --app-fg-mid: #3a4353;
+  --app-fg-low: var(--color-fog);
+  --app-border: var(--color-mist);
+  color-scheme: light;
+
+  --pill-bg: rgba(0,0,0,0.05);
+  --pill-bg-hover: rgba(0,0,0,0.10);
+}
+
+/* Base document styling */
+html, body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background-color: var(--app-bg);
+  color: var(--app-fg-high);
+}
+
+/* System selection to match accent */
+::selection { background: rgba(58,122,254,0.28); color: var(--app-fg-high); }
+[data-theme="light"] ::selection { background: rgba(58,122,254,0.20); color: var(--app-fg-high); }
+
+/* Scrollbar subtle theme */
+* { scrollbar-color: var(--app-border) transparent; }
+::-webkit-scrollbar { height: 10px; width: 10px; }
+::-webkit-scrollbar-thumb { background-color: var(--app-border); border-radius: 10px; border: 2px solid transparent; background-clip: padding-box; }
+::-webkit-scrollbar-track { background: transparent; }
+
+button { font-family: inherit; }
+
+/* Token utilities (compose with Tailwind) */
+.text-fg { color: var(--app-fg-high); }
+.text-fg-muted { color: var(--app-fg-mid); }
+.text-fg-subtle { color: var(--app-fg-low); }
+.text-danger-token { color: var(--app-danger); }
+.text-success-token { color: var(--app-success); }
+.text-warning-token { color: var(--app-warning); }
+.border-subtle { border-color: var(--app-border); }
+.bg-app { background-color: var(--app-bg); }
+.bg-surface-token { background-color: var(--app-surface); }
+.text-primary-token { color: var(--app-primary); }
+.focus-ring { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+.bg-pill { background-color: var(--pill-bg); }
+.hover-bg-pill:hover { background-color: var(--pill-bg-hover); }
+
+/* Press/focus highlight for generic pill hover targets */
+.hover-bg-pill:active,
+.hover-bg-pill:focus,
+.hover-bg-pill:hover:focus {
+  background-color: #4699ff33 !important; /* accent translucent highlight */
+}
+
+/* Reusable press/focus accent utility */
+.u-press-accent:active,
+.u-press-accent:focus,
+.u-press-accent:hover:focus {
+  background-color: #4699ff33 !important;
+}
+
+/* Form label utility (theme-aware) */
+.form-label {
+  font-size: 0.75rem; /* text-xs */
+  line-height: 1rem;
+  font-weight: 500;
+  color: var(--app-fg-mid);
+  letter-spacing: 0.01em;
+}
+[data-theme="light"] .form-label {
+  color: var(--app-fg-mid);
+}
+
+/* Titlebar specific: stronger hover emphasis in light theme */
+[data-theme="light"] .titlebar-btn--neutral:hover { color: var(--color-ink); }
+[data-theme="light"] .titlebar-btn--neutral .titlebar-icon { opacity: 0.7; }
+[data-theme="light"] .titlebar-btn--neutral:hover .titlebar-icon { opacity: 1; }
+
+/* Line clamp utility for multiline text truncation */
+.line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-clamp: 2; }
+
+/* Admin tabs utilities (scoped, no global token changes) */
+.u-tabs-chip-slider {
+  position: absolute;
+  top: 0.25rem; /* matches p-1 */
+  bottom: 0.25rem;
+  left: 0.25rem;
+  /* Segment width: (container width - 2 * padding) / tabs */
+  width: calc((100% - 0.5rem) / var(--tabs, 2));
+  background: var(--app-primary);
+  border-radius: 9999px;
+  /* Animate position and size for smooth sliding */
+  transition: left 220ms ease, width 220ms ease, background-color 220ms ease;
+}
+
+.u-tabs-chip-btn {
+  color: var(--app-fg-high);
+  background-color: transparent !important;
+  transition: color 180ms ease, background-color 180ms ease;
+}
+.u-tabs-chip-btn:hover {
+  /* color: var(--app-fg-mid); */
+}
+.u-tabs-chip-btn:hover:not(.u-tabs-chip-btn--active) {
+  background-color: var(--pill-bg-hover) !important;
+}
+.u-tabs-chip-btn--active:hover {
+  background-color: transparent !important;
+}
+.u-tabs-chip-btn--active { color: #fff; }
+
+/* Press/focus highlight for inactive admin tabs (mouse down / tap / keyboard focus) */
+.u-tabs-chip-btn:active:not(.u-tabs-chip-btn--active),
+.u-tabs-chip-btn:focus:not(.u-tabs-chip-btn--active),
+.u-tabs-chip-btn:hover:focus:not(.u-tabs-chip-btn--active) {
+  background-color: #4699ff33 !important; /* requested rgba accent */
+}
+

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+  <link rel="icon" href="./favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Task Management</title>
+    <script>
+      (function () {
+        try {
+          var KEY = 'app.theme';
+          var saved = localStorage.getItem(KEY);
+          var theme = null;
+          if (saved === 'light' || saved === 'dark') {
+            theme = saved;
+          } else if (window.matchMedia) {
+            theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          if (theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+          }
+        } catch (e) { /* noop */ }
+      })();
+    </script>
+  </head>
+  <body class="bg-app text-fg">
+    <div id="root"></div>
+    <script type="module" src="./src/main.tsx"></script>
+  </body>
+</html>
